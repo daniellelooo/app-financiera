@@ -2,124 +2,121 @@
 
 ## Descripción General
 
-Esta es una aplicación web financiera desarrollada como prototipo para ayudar a los usuarios a gestionar sus finanzas personales. Permite registrar ingresos, gastos, ahorros, metas de ahorro, visualizar estadísticas, y próximamente contará con una sección educativa, recomendaciones inteligentes y logros/retos para motivar el aprendizaje y la mejora financiera.
+Aplicación web para la gestión de finanzas personales. Permite registrar ingresos, gastos, ahorros y metas, visualizar estadísticas y próximamente contará con sección educativa, recomendaciones inteligentes y gamificación.
 
-## Tecnologías Utilizadas
+## Tecnologías
 
-- **Frontend:** React (Vite), Victory (gráficas), lucide-react (iconos)
+- **Frontend:** React (Vite), Victory, lucide-react
 - **Backend:** Node.js + Express
 - **Base de datos:** PostgreSQL
-- **Autenticación:** JWT (JSON Web Token)
-- **Estilos:** CSS personalizado
+- **Autenticación:** JWT
 
 ## Estructura del Proyecto
 
 ```
 prototipo-appfinanciera/
-├── index.html
-├── package.json
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── App.css
-│   ├── App.jsx
-│   ├── counter.js
-│   ├── javascript.svg
-│   ├── main.jsx
-│   ├── style.css
-│   ├── components/
-│   │   └── Header.jsx
-│   └── pages/
-│       ├── Budget.jsx
-│       ├── Dashboard.jsx
-│       ├── Education.jsx
-│       ├── Home.jsx
-│       ├── Login.jsx
-│       ├── Profile.jsx
-│       ├── Savings.jsx
-│       └── Statistics.jsx
+├── backend/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   └── pages/
+│   ├── package.json
+│   └── ...
+├── README.md
+└── ...
 ```
 
-## Funcionalidades Actuales
+## Funcionalidades
 
-- **Registro y autenticación de usuarios** (JWT)
-- **Dashboard** con tarjetas resumen de:
-  - Saldo
-  - Gastos
-  - Ahorros
-  - Logros
-  - Metas activas
-  - Lecciones completadas
-- **Actividad financiera reciente** (incluye ingresos, gastos y movimientos de ahorro)
-- **CRUD de ingresos, gastos y metas de ahorro**
-- **Estadísticas**:
-  - Gráficas de gastos por categoría (VictoryPie)
-  - Resumen de ingresos/gastos/ahorros (VictoryBar)
-  - Resumen del mes: progreso de la meta de ahorro más avanzada, categoría top, días sin gastos extras
-  - Análisis simple de salud financiera
-  - Recomendaciones básicas
-- **Persistencia de datos** en PostgreSQL
-- **Integración frontend-backend**
-- **Interfaz responsiva y moderna**
+- Registro y autenticación de usuarios
+- Dashboard con tarjetas resumen (saldo, gastos, ahorros, logros, metas activas, lecciones completadas)
+- Actividad financiera reciente (ingresos, gastos, ahorros)
+- CRUD de ingresos, gastos y metas de ahorro
+- Estadísticas: gráficas, resumen del mes, salud financiera
+- Persistencia en PostgreSQL
+- Interfaz responsiva
 
-## Principales Mejoras Realizadas Recientemente
+## Mejoras Recientes
 
-- Se migró toda la lógica de Dashboard y Estadísticas para que usen datos reales y no valores quemados.
-- Se integró la actividad de ahorros en la sección de actividad reciente.
-- Se agregaron tarjetas de resumen para metas activas y lecciones completadas.
-- Se corrigieron errores de JSX y se limpió la estructura de los componentes.
-- Se mejoró la sección "Resumen del Mes" en Estadísticas para mostrar datos relevantes y dinámicos.
-- Se garantizó que toda la información mostrada provenga de la base de datos o props, evitando variables globales y datos simulados.
+- Dashboard y estadísticas usan datos reales
+- Actividad de ahorros integrada en actividad reciente
+- Tarjetas de metas activas y lecciones completadas
+- Corrección de errores de JSX y limpieza de componentes
+- Resumen del mes dinámico y relevante
 
-## Cosas Generales que Hemos Hecho
+## Pendientes / Próximos Pasos
 
-- Implementación de backend con Express y PostgreSQL.
-- Autenticación segura con JWT.
-- CRUD completo para ingresos, gastos y metas de ahorro.
-- Refactorización del frontend para consumir datos reales.
-- Visualización de estadísticas y resúmenes financieros.
-- Limpieza y mejora de la estructura de los componentes React.
-- Integración de iconografía y gráficas modernas.
+- Sección educativa funcional (lecciones, quizzes)
+- Recomendaciones inteligentes con IA
+- Mejorar estética y experiencia de usuario
+- Agregar logros y retos (gamificación)
+- Notificaciones y alertas inteligentes
+- Mejorar gestión de metas de ahorro
 
-## Lo que Falta / Próximos Pasos
+## Instalación y Flujo de Trabajo para el Equipo
 
-- **Sección educativa funcional:** Lecciones, quizzes y recursos interactivos.
-- **Recomendaciones inteligentes con IA:** Sugerencias personalizadas basadas en hábitos y datos reales.
-- **Pulir el frontend:** Mejorar la estética, animaciones, y experiencia de usuario.
-- **Agregar logros y retos:** Sistema de gamificación para motivar el aprendizaje y la mejora financiera.
-- **Notificaciones y alertas inteligentes.**
-- **Mejorar la gestión de metas de ahorro:** Visualización de progreso, edición y cierre de metas.
-- **Optimización de rendimiento y seguridad.**
+### 1. Clonar el repositorio
 
-## Instalación y Ejecución
+```bash
+git clone <URL_DEL_REPO>
+```
 
-1. Clona el repositorio:
-   ```bash
-   git clone <repo-url>
-   ```
-2. Instala las dependencias en el frontend y backend:
-   ```bash
-   cd prototipo-appfinanciera/frontend
-   npm install
-   cd ../backend
-   npm install
-   ```
-3. Configura las variables de entorno (ver `.env.example` en backend).
-4. Inicia el backend:
-   ```bash
-   npm run dev
-   ```
-5. Inicia el frontend:
-   ```bash
-   cd ../frontend
-   npm run dev
-   ```
-6. Accede a la app en `http://localhost:5173`
+### 2. Instalar dependencias
 
-## Contribución
+```bash
+cd prototipo-appfinanciera/frontend
+npm install
+cd ../backend
+npm install
+```
 
-¡Las contribuciones son bienvenidas! Por favor, abre un issue o pull request para sugerencias, mejoras o reportar bugs.
+### 3. Configurar variables de entorno
 
-## Licencia
+Revisar y completar los archivos `.env` necesarios en backend y frontend.
 
-MIT
+### 4. Levantar el backend
+
+```bash
+cd backend
+npm run dev
+```
+
+### 5. Levantar el frontend
+
+```bash
+cd ../frontend
+npm run dev
+```
+
+### 6. Flujo de trabajo para cambios
+
+- Crea una nueva rama para tu funcionalidad o corrección:
+  ```bash
+  git checkout -b nombre-de-tu-rama
+  ```
+- Realiza tus cambios y haz commit:
+  ```bash
+  git add .
+  git commit -m "Descripción clara del cambio"
+  ```
+- Sube tu rama al repositorio remoto:
+  ```bash
+  git push origin nombre-de-tu-rama
+  ```
+- Abre un Pull Request en GitHub para revisión y merge.
+
+### 7. Mantener tu rama actualizada
+
+Antes de subir cambios, asegúrate de actualizar tu rama con la rama principal:
+
+```bash
+git checkout main
+git pull origin main
+git checkout nombre-de-tu-rama
+git merge main
+```
+
+---
+
+Para dudas técnicas o de flujo de trabajo, consulta con el equipo.
