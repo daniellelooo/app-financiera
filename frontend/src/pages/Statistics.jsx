@@ -120,9 +120,10 @@ const Statistics = ({ userExpenses, totalSaved }) => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              expenses: filteredExpenses,
-              incomes: filteredIncomes,
-              savingsGoals: [], // Puedes pasar metas reales si las tienes en props o estado
+              // Enviar TODOS los datos del usuario, no solo los filtrados por fecha
+              expenses: userExpenses || [],
+              incomes: userIncomes || [],
+              savingsGoals: [],
             }),
           }
         );
@@ -134,7 +135,8 @@ const Statistics = ({ userExpenses, totalSaved }) => {
           const matches = [...data.suggestions.matchAll(/\d+\.\s*([^\n\r]+)/g)];
           suggestions = matches
             .map((m) => m[1].trim())
-            .filter((s) => s.length > 0);
+            .filter((s) => s.length > 0)
+            .slice(0, 3); // Asegurar que solo se muestren máximo 3
         }
         setAiSuggestions(suggestions);
       } catch (err) {
@@ -145,7 +147,7 @@ const Statistics = ({ userExpenses, totalSaved }) => {
     };
     fetchSuggestions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(filteredExpenses), JSON.stringify(filteredIncomes)]);
+  }, [JSON.stringify(userExpenses), JSON.stringify(userIncomes)]);
 
   // Salud financiera simple basada en proporción ahorro/gasto/ingreso
   const ahorroRate =

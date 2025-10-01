@@ -63,15 +63,16 @@ La funcionalidad de sugerencias inteligentes usa Ollama como motor de IA local (
 
 1. Descarga e instala Ollama desde [https://ollama.com/download](https://ollama.com/download)
 2. Abre una terminal y ejecuta:
-  ```bash
-  ollama pull llama2
-  ollama run llama2
-  ```
-  (Puedes usar otros modelos como mistral, phi, etc.)
-3. Deja la terminal abierta con el modelo corriendo.
-4. El backend se conectará automáticamente a `http://localhost:11434`.
+
+```bash
+ollama pull llama2
+ollama run llama2
+```
+
+(Puedes usar otros modelos como mistral, phi, etc.) 3. Deja la terminal abierta con el modelo corriendo. 4. El backend se conectará automáticamente a `http://localhost:11434`.
 
 ### Notas
+
 - El archivo `backend/.env` ya no debe contener claves de OpenAI ni subirse al repositorio.
 - Si necesitas IA en la nube, adapta el backend para usar Gemini, OpenAI, etc.
 
