@@ -10,6 +10,7 @@ Aplicación web para la gestión de finanzas personales. Permite registrar ingre
 - **Backend:** Node.js + Express
 - **Base de datos:** PostgreSQL
 - **Autenticación:** JWT
+- **IA local:** Ollama (modelos open source como llama2)
 
 ## Estructura del Proyecto
 
@@ -54,6 +55,26 @@ prototipo-appfinanciera/
 - Notificaciones y alertas inteligentes
 - Mejorar gestión de metas de ahorro
 
+## IA Local con Ollama
+
+La funcionalidad de sugerencias inteligentes usa Ollama como motor de IA local (no requiere API key ni conexión a OpenAI).
+
+### Instalación de Ollama
+
+1. Descarga e instala Ollama desde [https://ollama.com/download](https://ollama.com/download)
+2. Abre una terminal y ejecuta:
+  ```bash
+  ollama pull llama2
+  ollama run llama2
+  ```
+  (Puedes usar otros modelos como mistral, phi, etc.)
+3. Deja la terminal abierta con el modelo corriendo.
+4. El backend se conectará automáticamente a `http://localhost:11434`.
+
+### Notas
+- El archivo `backend/.env` ya no debe contener claves de OpenAI ni subirse al repositorio.
+- Si necesitas IA en la nube, adapta el backend para usar Gemini, OpenAI, etc.
+
 ## Instalación y Flujo de Trabajo para el Equipo
 
 ### 1. Clonar el repositorio
@@ -80,6 +101,7 @@ Revisar y completar los archivos `.env` necesarios en backend y frontend.
 ```bash
 cd backend
 npm run dev
+# (Asegúrate de que Ollama esté corriendo en otra terminal)
 ```
 
 ### 5. Levantar el frontend
