@@ -102,29 +102,50 @@ const Statistics = ({ userExpenses, totalSaved }) => {
   );
   const totalSavings = typeof totalSaved === "number" ? totalSaved : 0;
 
-  // Datos para análisis de IA (puedes personalizarlo con insights reales si lo deseas)
-  const aiInsights = [
-    {
-      type: "warning",
-      title: "Gasto elevado en alguna categoría",
-      description:
-        categories.length > 0
-          ? `Tu mayor gasto este periodo fue en ${categories[0]}`
-          : "No hay datos suficientes.",
-      recommendation:
-        "Revisa tus gastos y ajusta tu presupuesto si es necesario.",
-      icon: AlertTriangle,
-      color: "#ff9800",
-    },
-    {
-      type: "positive",
-      title: "Ahorro acumulado",
-      description: `Tus ahorros actuales: $${totalSavings.toLocaleString()}`,
-      recommendation: "Sigue ahorrando para alcanzar tus metas.",
-      icon: TrendingUp,
-      color: "#4caf50",
-    },
-  ];
+  // Estado para sugerencias IA
+  const [aiSuggestions, setAiSuggestions] = useState([]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(null);
+
+  React.useEffect(() => {
+    const fetchSuggestions = async () => {
+      setAiLoading(true);
+      setAiError(null);
+      try {
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_API_URL || "http://localhost:4000"
+          }/api/suggestions`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              expenses: filteredExpenses,
+              incomes: filteredIncomes,
+              savingsGoals: [], // Puedes pasar metas reales si las tienes en props o estado
+            }),
+          }
+        );
+        const data = await res.json();
+        // El backend puede devolver texto extra antes de la lista numerada o todo en una sola línea
+        let suggestions = [];
+        if (typeof data.suggestions === "string") {
+          // Extrae todas las ocurrencias de "n. texto" usando regex global
+          const matches = [...data.suggestions.matchAll(/\d+\.\s*([^\n\r]+)/g)];
+          suggestions = matches
+            .map((m) => m[1].trim())
+            .filter((s) => s.length > 0);
+        }
+        setAiSuggestions(suggestions);
+      } catch (err) {
+        setAiError("No se pudieron obtener sugerencias de IA");
+      } finally {
+        setAiLoading(false);
+      }
+    };
+    fetchSuggestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(filteredExpenses), JSON.stringify(filteredIncomes)]);
 
   // Salud financiera simple basada en proporción ahorro/gasto/ingreso
   const ahorroRate =
@@ -404,46 +425,22 @@ const Statistics = ({ userExpenses, totalSaved }) => {
           Basado en tus hábitos financieros, aquí tienes recomendaciones
           personalizadas:
         </p>
-
-        {aiInsights.map((insight, index) => {
-          const IconComponent = insight.icon;
-
-          return (
-            <div
-              key={index}
-              className="card"
-              style={{
-                margin: "1rem 0",
-                borderLeft: `4px solid ${insight.color}`,
-                background:
-                  insight.type === "positive"
-                    ? "#e8f5e8"
-                    : insight.type === "warning"
-                    ? "#fff3e0"
-                    : "#e3f2fd",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "flex-start" }}>
-                <IconComponent
-                  size={24}
-                  color={insight.color}
-                  style={{ marginRight: "1rem", marginTop: "0.25rem" }}
-                />
-                <div style={{ flex: 1 }}>
-                  <h4 style={{ margin: "0 0 0.5rem 0", color: insight.color }}>
-                    {insight.title}
-                  </h4>
-                  <p style={{ margin: "0 0 0.5rem 0" }}>
-                    {insight.description}
-                  </p>
-                  <p style={{ margin: 0, fontStyle: "italic", color: "#666" }}>
-                    <strong>Recomendación:</strong> {insight.recommendation}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {aiLoading && (
+          <p style={{ color: "#888" }}>Cargando sugerencias de IA...</p>
+        )}
+        {aiError && <p style={{ color: "red" }}>{aiError}</p>}
+        {!aiLoading && !aiError && aiSuggestions.length > 0 && (
+          <ul style={{ paddingLeft: 24 }}>
+            {aiSuggestions.map((s, i) => (
+              <li key={i} style={{ marginBottom: 12, fontSize: "1.1rem" }}>
+                {s}
+              </li>
+            ))}
+          </ul>
+        )}
+        {!aiLoading && !aiError && aiSuggestions.length === 0 && (
+          <p style={{ color: "#888" }}>No hay sugerencias disponibles.</p>
+        )}
       </div>
 
       <div

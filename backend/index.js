@@ -1,10 +1,16 @@
 
 // === IMPORTS ===
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { Pool } from 'pg';
+
+import suggestionsRouter from './routes/suggestions.js';
+// ...existing code...
+
 
 // === DB INIT (PostgreSQL) ===
 const pool = new Pool({
@@ -50,12 +56,15 @@ const initDb = async () => {
 await initDb();
 
 
+
 // === EXPRESS INIT ===
 const app = express();
 const PORT = process.env.PORT || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 app.use(cors());
 app.use(express.json());
+// === SUGGESTIONS ROUTE ===
+app.use('/api/suggestions', suggestionsRouter);
 
 // === AUTH MIDDLEWARE ===
 const authMiddleware = async (req, res, next) => {
