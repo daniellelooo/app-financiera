@@ -1,11 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, LogOut, PiggyBank } from "lucide-react";
+import { User, LogOut, PiggyBank, Bell } from "lucide-react";
 
 const Header = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  // Obtener el nombre del usuario desde el backend
+  useEffect(() => {
+    const fetchUserName = async () => {
+      if (!isAuthenticated) {
+        setUserName("");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          // Usar el nombre real del usuario
+          setUserName(data.name || "Usuario");
+        }
+      } catch (error) {
+        console.error("Error obteniendo perfil:", error);
+      }
+    };
+
+    fetchUserName();
+  }, [isAuthenticated]);
+
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setUserName("");
+    localStorage.removeItem("token");
     navigate("/");
   };
 
@@ -33,21 +65,31 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
               <Link to="/budget" className="nav-link">
                 Presupuesto
               </Link>
-              <Link to="/savings" className="nav-link">
-                Ahorros
+              <Link to="/goals" className="nav-link">
+                Metas
               </Link>
               <Link to="/education" className="nav-link">
                 Educación
               </Link>
+              <Link to="/gamification" className="nav-link">
+                Juegos
+              </Link>
               <Link to="/statistics" className="nav-link">
                 Estadísticas
+              </Link>
+              <Link
+                to="/notifications"
+                className="nav-link"
+                title="Notificaciones"
+              >
+                <Bell size={20} />
               </Link>
               <Link to="/profile" className="nav-link">
                 <User
                   size={18}
                   style={{ marginRight: "5px", verticalAlign: "middle" }}
                 />
-                Perfil
+                {userName ? userName.split(" ")[0] : "Perfil"}
               </Link>
               <button onClick={handleLogout} className="btn btn-secondary">
                 <LogOut

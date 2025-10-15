@@ -1,219 +1,155 @@
-import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, Edit, Save, X } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { User, Mail } from "lucide-react";
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
-    name: 'Ana García',
-    email: 'ana.garcia@universidad.edu',
-    phone: '+57 300 123 4567',
-    position: 'Coordinadora Académica',
-    department: 'Facultad de Ingeniería',
-    location: 'Medellín, Colombia',
-    bio: 'Coordinadora académica con 8 años de experiencia en gestión educativa y tecnológica.'
+    name: "",
+    email: "",
   });
+  const [loading, setLoading] = useState(true);
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  // Obtener datos del usuario desde el backend
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  const handleSave = () => {
-    setIsEditing(false);
-    // Aquí se guardarían los cambios
-  };
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUserData({
+            name: data.name || "Usuario",
+            email: data.email,
+          });
+        }
+      } catch (error) {
+        console.error("Error cargando perfil:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    // Aquí se revertirían los cambios
-  };
+    fetchProfile();
+  }, []);
 
-  const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value
-    });
-  };
+  if (loading) {
+    return (
+      <div className="card">
+        <p style={{ textAlign: "center", padding: "2rem" }}>
+          Cargando perfil...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-          <h1 className="card-title">Mi Perfil</h1>
-          {!isEditing ? (
-            <button onClick={handleEdit} className="btn btn-primary">
-              <Edit size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-              Editar
-            </button>
-          ) : (
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button onClick={handleSave} className="btn btn-primary">
-                <Save size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                Guardar
-              </button>
-              <button onClick={handleCancel} className="btn btn-secondary">
-                <X size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                Cancelar
-              </button>
-            </div>
-          )}
-        </div>
+        <h1 className="card-title" style={{ marginBottom: "2rem" }}>
+          Mi Perfil
+        </h1>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '2rem', alignItems: 'start' }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ 
-              width: '120px', 
-              height: '120px', 
-              borderRadius: '50%', 
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem auto'
-            }}>
-              <User size={60} color="white" />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "2rem",
+            maxWidth: "600px",
+            margin: "0 auto",
+          }}
+        >
+          {/* Avatar */}
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                width: "140px",
+                height: "140px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 1rem auto",
+                boxShadow: "0 4px 12px rgba(102, 126, 234, 0.3)",
+              }}
+            >
+              <User size={70} color="white" />
             </div>
-            <h3 style={{ margin: '0 0 0.5rem 0' }}>{userData.name}</h3>
-            <p style={{ margin: 0, color: '#666' }}>{userData.position}</p>
+            <h2 style={{ margin: "0 0 0.5rem 0", fontSize: "1.8rem" }}>
+              {userData.name}
+            </h2>
+            <p style={{ margin: 0, color: "#888", fontSize: "0.95rem" }}>
+              Miembro desde 2025
+            </p>
           </div>
 
-          <div>
+          {/* Información del usuario */}
+          <div style={{ width: "100%" }}>
             <div className="form-group">
               <label className="form-label">
-                <User size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                <User
+                  size={18}
+                  style={{ marginRight: "8px", verticalAlign: "middle" }}
+                />
                 Nombre Completo
               </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="name"
-                  className="form-input"
-                  value={userData.name}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-                  {userData.name}
-                </p>
-              )}
+              <p
+                style={{
+                  margin: "0.5rem 0",
+                  padding: "0.75rem 1rem",
+                  background: "#f8f9fa",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                }}
+              >
+                {userData.name}
+              </p>
             </div>
 
             <div className="form-group">
               <label className="form-label">
-                <Mail size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                <Mail
+                  size={18}
+                  style={{ marginRight: "8px", verticalAlign: "middle" }}
+                />
                 Correo Electrónico
               </label>
-              {isEditing ? (
-                <input
-                  type="email"
-                  name="email"
-                  className="form-input"
-                  value={userData.email}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-                  {userData.email}
-                </p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                <Phone size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                Teléfono
-              </label>
-              {isEditing ? (
-                <input
-                  type="tel"
-                  name="phone"
-                  className="form-input"
-                  value={userData.phone}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-                  {userData.phone}
-                </p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                <MapPin size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                Ubicación
-              </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  name="location"
-                  className="form-input"
-                  value={userData.location}
-                  onChange={handleChange}
-                />
-              ) : (
-                <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-                  {userData.location}
-                </p>
-              )}
+              <p
+                style={{
+                  margin: "0.5rem 0",
+                  padding: "0.75rem 1rem",
+                  background: "#f8f9fa",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                }}
+              >
+                {userData.email}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="card">
-        <h3 className="card-title">Información Profesional</h3>
-        
-        <div className="form-group">
-          <label className="form-label">Cargo</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="position"
-              className="form-input"
-              value={userData.position}
-              onChange={handleChange}
-            />
-          ) : (
-            <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-              {userData.position}
-            </p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Departamento</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="department"
-              className="form-input"
-              value={userData.department}
-              onChange={handleChange}
-            />
-          ) : (
-            <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-              {userData.department}
-            </p>
-          )}
-        </div>
-
-        <div className="form-group">
-          <label className="form-label">Biografía</label>
-          {isEditing ? (
-            <textarea
-              name="bio"
-              className="form-input"
-              value={userData.bio}
-              onChange={handleChange}
-              rows={4}
-              style={{ resize: 'vertical' }}
-            />
-          ) : (
-            <p style={{ margin: '0.5rem 0', padding: '0.75rem', background: '#f8f9fa', borderRadius: '4px' }}>
-              {userData.bio}
-            </p>
-          )}
-        </div>
+      {/* Tarjeta de estadísticas rápidas */}
+      <div
+        className="card"
+        style={{
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+        }}
+      >
+        <h3 className="card-title" style={{ color: "white" }}>
+          ¡Bienvenido a FinanSmart!
+        </h3>
+        <p style={{ margin: "1rem 0", fontSize: "1.05rem", lineHeight: "1.6" }}>
+          Estás tomando el control de tus finanzas personales. Sigue registrando
+          tus ingresos y gastos para obtener análisis más precisos y
+          recomendaciones personalizadas.
+        </p>
       </div>
     </div>
   );

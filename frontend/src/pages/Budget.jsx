@@ -6,6 +6,16 @@ import {
   Calendar,
   Tag,
   Trash2,
+  ShoppingCart,
+  Car,
+  Gamepad2,
+  GraduationCap,
+  Shirt,
+  Heart,
+  Laptop,
+  MoreHorizontal,
+  TrendingUp,
+  Wallet,
 } from "lucide-react";
 
 const Budget = ({
@@ -33,15 +43,23 @@ const Budget = ({
   // useEffect eliminado: la carga de datos y balance ahora se hace en App.jsx
 
   const categories = [
-    "Alimentación",
-    "Transporte",
-    "Entretenimiento",
-    "Educación",
-    "Ropa",
-    "Salud",
-    "Tecnología",
-    "Otros",
+    { name: "Alimentación", icon: ShoppingCart, color: "#ff6b6b" },
+    { name: "Transporte", icon: Car, color: "#4ecdc4" },
+    { name: "Entretenimiento", icon: Gamepad2, color: "#95e1d3" },
+    { name: "Educación", icon: GraduationCap, color: "#667eea" },
+    { name: "Ropa", icon: Shirt, color: "#f38181" },
+    { name: "Salud", icon: Heart, color: "#aa96da" },
+    { name: "Tecnología", icon: Laptop, color: "#5f27cd" },
+    { name: "Otros", icon: MoreHorizontal, color: "#a8dadc" },
   ];
+
+  // Helper para obtener la categoría
+  const getCategoryData = (categoryName) => {
+    return (
+      categories.find((c) => c.name === categoryName) ||
+      categories[categories.length - 1]
+    );
+  };
 
   // Función para recargar incomes y expenses del backend
   const reloadData = async () => {
@@ -105,6 +123,24 @@ const Budget = ({
     }
   };
 
+  // Refrescar todos los retos automáticamente
+  const refreshChallenges = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_URL}/api/gamification/refresh-challenges`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Error refrescando retos:", err);
+    }
+  };
+
   const handleAddExpense = async (e) => {
     e.preventDefault();
     if (expense && parseFloat(expense) > 0 && expenseDescription) {
@@ -132,6 +168,9 @@ const Budget = ({
           setExpense("");
           setExpenseDescription("");
           await reloadData();
+
+          // Refrescar todos los retos
+          await refreshChallenges();
         } else {
           alert("Error al guardar el gasto en el backend");
         }
@@ -294,8 +333,8 @@ const Budget = ({
                 onChange={(e) => setExpenseCategory(e.target.value)}
               >
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
+                  <option key={cat.name} value={cat.name}>
+                    {cat.name}
                   </option>
                 ))}
               </select>
@@ -431,8 +470,8 @@ const Budget = ({
                           }}
                         >
                           {categories.map((cat) => (
-                            <option key={cat} value={cat}>
-                              {cat}
+                            <option key={cat.name} value={cat.name}>
+                              {cat.name}
                             </option>
                           ))}
                         </select>

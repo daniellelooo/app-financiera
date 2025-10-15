@@ -75,6 +75,34 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
       console.error("Error al eliminar meta:", error);
     }
   };
+
+  // Refrescar todos los retos automáticamente
+  const refreshChallenges = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await fetch(
+        `${import.meta.env.VITE_API_URL}/api/gamification/refresh-challenges`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Error refrescando retos:", err);
+    }
+  };
+
+  // Funciones DEPRECADAS - mantener para no romper código existente
+  const updateSavingsChallenges = async () => {
+    await refreshChallenges();
+  };
+
+  const updateGoalCompletedChallenge = async () => {
+    await refreshChallenges();
+  };
+
   // Estado para edición de metas
   const [editingGoal, setEditingGoal] = useState(null);
   const [editGoalData, setEditGoalData] = useState({
@@ -93,39 +121,6 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
 
   const [savingAmount, setSavingAmount] = useState("");
   const [selectedGoal, setSelectedGoal] = useState("");
-
-  const challenges = [
-    {
-      id: 1,
-      title: "Reto de la Semana Sin Gastos Innecesarios",
-      description:
-        "Durante 7 días, evita comprar cosas que no necesitas realmente",
-      reward: "Badge de Autodisciplina",
-      progress: 5,
-      total: 7,
-      active: true,
-    },
-    {
-      id: 2,
-      title: "Ahorra $5,000 diarios por 30 días",
-      description: "Guarda $5,000 pesos cada día durante un mes completo",
-      reward: "$150,000 + Badge de Constancia",
-      progress: 12,
-      total: 30,
-      active: true,
-    },
-    {
-      id: 3,
-      title: "Mes sin comida rápida",
-      description: "Evita comprar comida rápida durante todo el mes",
-      reward: "Badge de Vida Saludable + $50,000 bonus",
-      progress: 30,
-      total: 30,
-      active: false,
-      completed: true,
-    },
-  ];
-
   // Función para recargar metas del backend
   const reloadGoals = async () => {
     const token = localStorage.getItem("token");
@@ -183,6 +178,7 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
       const goal = savingsGoals.find((g) => g.id === parseInt(selectedGoal));
       if (!goal) return;
       const newCurrent = goal.current + amount;
+      const isNewlyCompleted = !goal.completed && newCurrent >= goal.target;
       const updatedGoal = {
         ...goal,
         current: newCurrent,
@@ -211,6 +207,14 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
         if (res.ok) {
           // Recargar metas desde backend para mantener sincronizado
           await reloadGoals();
+
+          // Actualizar desafíos de gamificación
+          await updateSavingsChallenges(amount);
+
+          // Si se completó una meta, actualizar desafío de meta alcanzada
+          if (isNewlyCompleted) {
+            await updateGoalCompletedChallenge();
+          }
         } else {
           const err = await res.text();
           alert("Error al actualizar ahorro: " + err);
@@ -502,25 +506,33 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
                       <span>${goal.target.toLocaleString()}</span>
                     </div>
 
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "20px",
-                        backgroundColor: "#e0e0e0",
-                        borderRadius: "10px",
-                        overflow: "hidden",
-                      }}
-                    >
+                    {/* Progress bar mejorada */}
+                    <div className="progress-bar">
                       <div
+                        className="progress-fill"
                         style={{
                           width: `${Math.min(progress, 100)}%`,
-                          height: "100%",
-                          backgroundColor: goal.completed
-                            ? "#4caf50"
-                            : "#667eea",
-                          transition: "width 0.3s ease",
+                          background: goal.completed
+                            ? "linear-gradient(90deg, #4caf50 0%, #66bb6a 100%)"
+                            : "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
                         }}
-                      ></div>
+                      >
+                        {progress >= 10 && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              right: "8px",
+                              top: "50%",
+                              transform: "translateY(-50%)",
+                              color: "white",
+                              fontSize: "0.75rem",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {progress.toFixed(0)}%
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div
@@ -554,88 +566,6 @@ const Savings = ({ savingsGoals, setSavingsGoals }) => {
             })}
           </div>
         )}
-      </div>
-
-      <div className="card">
-        <h3 className="card-title">
-          <Trophy
-            size={24}
-            style={{ marginRight: "10px", verticalAlign: "middle" }}
-          />
-          Retos de Ahorro Gamificados
-        </h3>
-
-        {challenges.map((challenge) => (
-          <div
-            key={challenge.id}
-            className="card"
-            style={{
-              margin: "1rem 0",
-              border: challenge.completed
-                ? "2px solid #4caf50"
-                : challenge.active
-                ? "2px solid #667eea"
-                : "1px solid #ddd",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                marginBottom: "1rem",
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <h4 style={{ margin: "0 0 0.5rem 0" }}>{challenge.title}</h4>
-                <p style={{ margin: "0 0 1rem 0", color: "#666" }}>
-                  {challenge.description}
-                </p>
-                <p style={{ margin: 0, fontWeight: "bold", color: "#667eea" }}>
-                  🏆 Recompensa: {challenge.reward}
-                </p>
-              </div>
-
-              {challenge.completed && <CheckCircle size={32} color="#4caf50" />}
-            </div>
-
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <span>Progreso:</span>
-                <span>
-                  {challenge.progress}/{challenge.total}
-                </span>
-              </div>
-
-              <div
-                style={{
-                  width: "100%",
-                  height: "15px",
-                  backgroundColor: "#e0e0e0",
-                  borderRadius: "8px",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    width: `${(challenge.progress / challenge.total) * 100}%`,
-                    height: "100%",
-                    backgroundColor: challenge.completed
-                      ? "#4caf50"
-                      : "#667eea",
-                    transition: "width 0.3s ease",
-                  }}
-                ></div>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

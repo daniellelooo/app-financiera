@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -27,11 +28,16 @@ const Register = () => {
       setError("Las contraseñas no coinciden");
       return;
     }
+    if (!formData.name.trim()) {
+      setError("El nombre es requerido");
+      return;
+    }
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: formData.name,
           email: formData.email,
           password: formData.password,
         }),
@@ -58,6 +64,24 @@ const Register = () => {
         Registrarse
       </h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">
+            <User
+              size={18}
+              style={{ marginRight: "8px", verticalAlign: "middle" }}
+            />
+            Nombre Completo
+          </label>
+          <input
+            type="text"
+            name="name"
+            className="form-input"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Tu nombre completo"
+            required
+          />
+        </div>
         <div className="form-group">
           <label className="form-label">
             <User
