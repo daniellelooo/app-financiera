@@ -9,8 +9,11 @@ import {
   Calculator,
   TrendingUp,
   Shield,
-  Trophy,
-  Star,
+  Target,
+  Sparkles,
+  DollarSign,
+  PiggyBank,
+  Lightbulb,
 } from "lucide-react";
 
 const Education = () => {
@@ -21,6 +24,17 @@ const Education = () => {
   const [showQuizResult, setShowQuizResult] = useState(false);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
+
+  // Función helper para renderizar iconos
+  const renderIcon = (iconName, size, color) => {
+    const icons = {
+      target: <Target size={size} color={color} />,
+      book: <BookOpen size={size} color={color} />,
+      dollar: <DollarSign size={size} color={color} />,
+      piggy: <PiggyBank size={size} color={color} />,
+    };
+    return icons[iconName] || <Award size={size} color={color} />;
+  };
 
   // Cargar progreso al montar el componente
   useEffect(() => {
@@ -201,28 +215,28 @@ const Education = () => {
       id: 1,
       title: "Primer Paso",
       description: "Completaste tu primera lección",
-      icon: "🎯",
+      icon: "target",
       earned: true,
     },
     {
       id: 2,
       title: "Estudiante Dedicado",
       description: "Completaste 5 lecciones",
-      icon: "📚",
+      icon: "book",
       earned: false,
     },
     {
       id: 3,
       title: "Maestro del Presupuesto",
       description: "Completaste el módulo de presupuesto",
-      icon: "💰",
+      icon: "dollar",
       earned: false,
     },
     {
       id: 4,
       title: "Genio del Ahorro",
       description: "Completaste el módulo de ahorro",
-      icon: "🏦",
+      icon: "piggy",
       earned: false,
     },
     {
@@ -268,10 +282,10 @@ const Education = () => {
       content: `
         El dinero es una herramienta, no un objetivo. Su importancia radica en que te permite:
         
-        🎯 LIBERTAD: Tomar decisiones sin preocuparte por limitaciones económicas
-        🛡️ SEGURIDAD: Enfrentar imprevistos sin estrés
-        🌟 OPORTUNIDADES: Aprovechar oportunidades que requieren inversión
-        ⏳ TIEMPO: Comprar tiempo y comodidad
+        → LIBERTAD: Tomar decisiones sin preocuparte por limitaciones económicas
+        → SEGURIDAD: Enfrentar imprevistos sin estrés
+        → OPORTUNIDADES: Aprovechar oportunidades que requieren inversión
+        → TIEMPO: Comprar tiempo y comodidad
         
         Para los estudiantes universitarios, el dinero bien manejado significa:
         • Poder concentrarte en estudiar sin estrés financiero
@@ -308,9 +322,9 @@ const Education = () => {
         • Materiales de estudio
         • Ropa y tecnología
         
-        📊 LA REGLA DE ORO:
+        → LA REGLA DE ORO:
         Ingresos > Gastos = ✅ Salud financiera
-        Ingresos < Gastos = ⚠️ Problemas a la vista
+        Ingresos < Gastos = Problemas a la vista
         
         Consejo: Registra TODO durante un mes para saber realmente cuánto gastas.
       `,
@@ -396,7 +410,7 @@ const Education = () => {
       content: `
         Ser honesto con tus ingresos es el primer paso para un presupuesto real.
         
-        📝 QUÉ REGISTRAR:
+        → QUÉ REGISTRAR:
         
         INGRESOS FIJOS (cada mes igual):
         • Mesada regular
@@ -408,7 +422,7 @@ const Education = () => {
         • Regalos de cumpleaños
         • Ventas de cosas que ya no usas
         
-        💡 TIPS IMPORTANTES:
+        → TIPS IMPORTANTES:
         
         1. Usa el promedio de 3 meses para ingresos variables
         2. NO cuentes dinero que "esperas" recibir
@@ -434,7 +448,7 @@ const Education = () => {
       content: `
         Organizar tus gastos en categorías te ayuda a ver dónde va realmente tu dinero.
         
-        📊 CATEGORÍAS PRINCIPALES:
+        → CATEGORÍAS PRINCIPALES:
         
         🍔 NECESIDADES (50%):
         • Comida
@@ -442,13 +456,13 @@ const Education = () => {
         • Materiales de estudio
         • Productos de higiene
         
-        🎮 GUSTOS (30%):
+        → GUSTOS (30%):
         • Entretenimiento
         • Salidas con amigos
         • Streaming services
         • Hobbies
         
-        💰 AHORRO (20%):
+        → AHORRO (20%):
         • Fondo de emergencia
         • Metas específicas
         • Inversiones futuras
@@ -470,26 +484,26 @@ const Education = () => {
       content: `
         La regla 50/30/20 es una forma SIMPLE de dividir tu dinero:
         
-        💵 50% - NECESIDADES
+        → 50% - NECESIDADES
         Lo que TIENES que pagar sí o sí:
         • Comida y transporte
         • Servicios básicos (celular, internet)
         • Útiles escolares
         
-        🎯 30% - DESEOS
+        → 30% - DESEOS
         Lo que QUIERES pero no necesitas:
         • Salir a comer
         • Netflix, Spotify
         • Ropa de moda
         • Videojuegos
         
-        💰 20% - AHORRO
+        → 20% - AHORRO
         Para tu futuro:
         • Emergencias
         • Metas a corto plazo
         • Metas a largo plazo
         
-        ⚠️ PARA ESTUDIANTES:
+        → PARA ESTUDIANTES:
         Si vives con tus padres, intenta ahorrar el 40% en lugar del 20%.
         ¡Aprovecha que no pagas renta ni comida!
       `,
@@ -509,7 +523,7 @@ const Education = () => {
       content: `
         Ahorrar cuando eres joven es como plantar un árbol: entre más temprano lo hagas, más grande crecerá.
         
-        🌟 VENTAJAS DE AHORRAR JOVEN:
+        → VENTAJAS DE AHORRAR JOVEN:
         
         1. TIEMPO = TU SUPERPODER
         Tienes décadas para que tu dinero crezca
@@ -526,7 +540,7 @@ const Education = () => {
         5. OPORTUNIDADES
         Cuando aparezca una gran oportunidad, tendrás el dinero
         
-        💡 EJEMPLO REAL:
+        → EJEMPLO REAL:
         Si ahorras $50,000 al mes desde los 20 años:
         A los 30 tendrás $6,000,000 + intereses
         ¡Sin contar el interés compuesto!
@@ -550,7 +564,7 @@ const Education = () => {
         🤔 ¿QUÉ ES?
         Es ganar interés sobre tu dinero... ¡Y sobre los intereses que ya ganaste!
         
-        📈 EJEMPLO MÁGICO:
+        → EJEMPLO MÁGICO:
         
         Inviertes $1,000,000 al 10% anual:
         Año 1: $1,100,000 (ganas $100,000)
@@ -559,7 +573,7 @@ const Education = () => {
         
         ¡Los intereses generan más intereses!
         
-        💰 COMPARACIÓN PODEROSA:
+        → COMPARACIÓN PODEROSA:
         Persona A ahorra desde los 20 a los 30 (10 años)
         Persona B ahorra desde los 30 a los 60 (30 años)
         
@@ -584,10 +598,10 @@ const Education = () => {
       content: `
         No necesitas ganar mucho para ahorrar. Aquí tienes estrategias realistas:
         
-        💡 MÉTODO "PÁGATE PRIMERO"
+        → MÉTODO "PÁGATE PRIMERO"
         Cuando recibas dinero, aparta el 20% ANTES de gastar
         
-        🎯 LA REGLA DE LAS 24 HORAS
+        → LA REGLA DE LAS 24 HORAS
         ¿Quieres comprar algo? Espera 24 horas. Si todavía lo quieres, cómpralo.
         
         🍕 TRAE LUNCH
@@ -596,14 +610,14 @@ const Education = () => {
         ☕ CAFÉ EN CASA
         Un café diario = $90,000 al mes. Hazlo en casa = $10,000
         
-        📱 REVISA SUSCRIPCIONES
+        → REVISA SUSCRIPCIONES
         ¿Realmente usas Netflix, Spotify, Prime, HBO, Disney+?
         Elige 1-2 y compártelas con amigos
         
         🚶 CAMINA MÁS
         Si está a menos de 20min, camina en vez de Uber
         
-        💳 CASH PARA GASTOS
+        → CASH PARA GASTOS
         Retira efectivo semanal. Cuando se acabe, se acabe.
       `,
       quiz: {
@@ -634,7 +648,7 @@ const Education = () => {
         • Vacaciones
         • "Se me antojó"
         
-        💰 ¿CUÁNTO NECESITAS?
+        → ¿CUÁNTO NECESITAS?
         
         META INICIAL: $500,000
         (cubre la mayoría de emergencias pequeñas)
@@ -687,7 +701,7 @@ const Education = () => {
         - Para consumo que no genera valor
         - Reduce tu patrimonio
         
-        🎯 REGLA DE ORO:
+        → REGLA DE ORO:
         Solo endeúdate para INVERTIR en ti mismo, no para CONSUMIR.
       `,
       quiz: {
@@ -713,7 +727,7 @@ const Education = () => {
         • Disponibilidad en emergencias
         • No cargas efectivo
         
-        ⚠️ RIESGOS:
+        → RIESGOS:
         • Intereses altísimos (30-50% anual)
         • Fácil gastar más de lo que tienes
         • Cuota de manejo
@@ -754,7 +768,7 @@ const Education = () => {
         • Evitas ver tus estados de cuenta
         • Te estresas cuando piensas en dinero
         
-        🛡️ ESTRATEGIAS DE PREVENCIÓN:
+        → ESTRATEGIAS DE PREVENCIÓN:
         
         1. REGLA DEL 30%
         Tus pagos de deuda NO deben superar el 30% de tus ingresos
@@ -771,7 +785,7 @@ const Education = () => {
         5. PIENSA DOS VECES
         Antes de comprar a crédito: ¿Realmente lo necesito?
         
-        💡 MANTRA: "Si no puedo pagarlo en efectivo, no puedo comprarlo"
+        → MANTRA: "Si no puedo pagarlo en efectivo, no puedo comprarlo"
       `,
       quiz: {
         question: "¿Cuánto de tus ingresos puede ir a pago de deudas?",
@@ -789,7 +803,7 @@ const Education = () => {
       content: `
         Si ya estás endeudado, no te preocupes. Hay salida. Aquí el plan:
         
-        🎯 MÉTODO BOLA DE NIEVE:
+        → MÉTODO BOLA DE NIEVE:
         1. Lista todas tus deudas de menor a mayor
         2. Paga el mínimo en todas
         3. Pon dinero EXTRA en la más pequeña
@@ -805,7 +819,7 @@ const Education = () => {
         
         ¿Por qué funciona? Es matemáticamente óptimo
         
-        🔥 PLAN DE ATAQUE:
+        → PLAN DE ATAQUE:
         • Negocia tasas de interés más bajas
         • Busca ingresos extra temporales
         • Vende cosas que no usas
@@ -973,7 +987,16 @@ const Education = () => {
               transition: "all 0.3s",
             }}
           >
-            <h3 style={{ marginBottom: "1.5rem" }}>📝 Quiz de la Lección</h3>
+            <h3
+              style={{
+                marginBottom: "1.5rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <BookOpen size={20} /> Quiz de la Lección
+            </h3>
             <p style={{ fontSize: "1.1rem", marginBottom: "1.5rem" }}>
               <strong>{content.quiz.question}</strong>
             </p>
@@ -1028,7 +1051,7 @@ const Education = () => {
                       style={{ marginBottom: "1rem" }}
                     />
                     <h3 style={{ color: "#28a745", marginBottom: "1rem" }}>
-                      ¡Respuesta Correcta! 🎉
+                      ¡Respuesta Correcta!
                     </h3>
                     <p>Completando la lección...</p>
                   </>
@@ -1352,12 +1375,15 @@ const Education = () => {
               >
                 <div
                   style={{
-                    fontSize: "3.5rem",
                     marginBottom: "1rem",
                     filter: isEarned ? "none" : "grayscale(100%)",
                   }}
                 >
-                  {achievement.icon}
+                  {renderIcon(
+                    achievement.icon,
+                    56,
+                    isEarned ? "#4F46E5" : "#999"
+                  )}
                 </div>
                 <h4
                   style={{
@@ -1388,9 +1414,13 @@ const Education = () => {
                       fontWeight: "bold",
                       color: "#333",
                       boxShadow: "0 2px 8px rgba(255, 215, 0, 0.4)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
                     }}
                   >
-                    ✨ ¡DESBLOQUEADO! ✨
+                    <Sparkles size={16} /> ¡DESBLOQUEADO! <Sparkles size={16} />
                   </div>
                 ) : (
                   <div
@@ -1401,9 +1431,13 @@ const Education = () => {
                       borderRadius: "20px",
                       fontSize: "0.85rem",
                       color: "#999",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
                     }}
                   >
-                    🔒 Bloqueado
+                    <Lock size={16} /> Bloqueado
                   </div>
                 )}
               </div>
@@ -1419,7 +1453,12 @@ const Education = () => {
           color: "white",
         }}
       >
-        <h3 className="card-title">💡 Tip del Día</h3>
+        <h3
+          className="card-title"
+          style={{ display: "flex", alignItems: "center", gap: "10px" }}
+        >
+          <Lightbulb size={24} /> Tip del Día
+        </h3>
         <p style={{ margin: 0, fontSize: "1.1rem" }}>
           "El interés compuesto es la octava maravilla del mundo. Quien lo
           entiende, lo gana; quien no lo entiende, lo paga." - Albert Einstein

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, LogOut, PiggyBank, Bell } from "lucide-react";
+import { User, LogOut, PiggyBank, Bell, Moon, Sun } from "lucide-react";
 
-const Header = ({ isAuthenticated, setIsAuthenticated }) => {
+const Header = ({
+  isAuthenticated,
+  setIsAuthenticated,
+  isDarkMode,
+  toggleTheme,
+}) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
 
@@ -84,6 +89,21 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
               >
                 <Bell size={20} />
               </Link>
+              <button
+                onClick={toggleTheme}
+                className="nav-link"
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "0.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                title={isDarkMode ? "Modo Claro" : "Modo Oscuro"}
+              >
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
               <Link to="/profile" className="nav-link">
                 <User
                   size={18}
@@ -101,6 +121,21 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
             </>
           ) : (
             <>
+              <button
+                onClick={toggleTheme}
+                className="nav-link"
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "0.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                title={isDarkMode ? "Modo Claro" : "Modo Oscuro"}
+              >
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
               <Link
                 to="/login"
                 className="btn btn-primary"

@@ -8,6 +8,9 @@ import {
   TrendingUp,
   Users,
   Zap,
+  Sparkles,
+  BookOpen,
+  Lock,
 } from "lucide-react";
 
 const Gamification = () => {
@@ -657,11 +660,10 @@ const Gamification = () => {
                         position: "absolute",
                         top: "10px",
                         right: "10px",
-                        fontSize: "1.5rem",
                         animation: "sparkle 2s infinite",
                       }}
                     >
-                      ✨
+                      <Sparkles size={20} color="#ffd700" />
                     </div>
                   </>
                 )}
@@ -709,10 +711,12 @@ const Gamification = () => {
                       fontWeight: "bold",
                       color: "#333",
                       boxShadow: "0 4px 15px rgba(255, 215, 0, 0.3)",
-                      display: "inline-block",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
                     }}
                   >
-                    ✨ Desbloqueada
+                    <Sparkles size={16} /> Desbloqueada
                   </div>
                 ) : (
                   <div
@@ -722,10 +726,12 @@ const Gamification = () => {
                       borderRadius: "25px",
                       fontSize: "0.85rem",
                       color: "#999",
-                      display: "inline-block",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
                     }}
                   >
-                    🔒 Bloqueada
+                    <Lock size={16} /> Bloqueada
                   </div>
                 )}
               </div>
@@ -990,15 +996,26 @@ const Gamification = () => {
         </h3>
 
         <ul style={{ lineHeight: "2", margin: 0, paddingLeft: "1.5rem" }}>
-          <li>
-            Registra tus gastos e ingresos diariamente para mantener tu racha 🔥
+          <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            Registra tus gastos e ingresos diariamente para mantener tu racha{" "}
+            <Flame size={16} color="#ff6b6b" />
           </li>
-          <li>Completa desafíos mensuales para ganar grandes recompensas 🎯</li>
-          <li>Avanza en las lecciones de educación financiera 📚</li>
-          <li>
-            Alcanza tus metas de ahorro para desbloquear insignias especiales 🏆
+          <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            Completa desafíos mensuales para ganar grandes recompensas{" "}
+            <Target size={16} color="#4dabf7" />
           </li>
-          <li>Cada 1000 puntos subes de nivel - ¡sigue acumulando! ⭐</li>
+          <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            Avanza en las lecciones de educación financiera{" "}
+            <BookOpen size={16} color="#51cf66" />
+          </li>
+          <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            Alcanza tus metas de ahorro para desbloquear insignias especiales{" "}
+            <Trophy size={16} color="#ffd700" />
+          </li>
+          <li style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            Cada 1000 puntos subes de nivel - ¡sigue acumulando!{" "}
+            <Star size={16} color="#ffd700" />
+          </li>
         </ul>
       </div>
     </div>

@@ -10,6 +10,10 @@ import {
   ArrowUp,
   ArrowDown,
   Activity,
+  CheckCircle,
+  AlertCircle,
+  Lightbulb,
+  Rocket,
 } from "lucide-react";
 
 const Dashboard = ({
@@ -133,8 +137,26 @@ const Dashboard = ({
             >
               ${userBalance.toLocaleString()}
             </div>
-            <div style={{ fontSize: "0.85rem", opacity: 0.9 }}>
-              {userBalance >= 0 ? "💰 En positivo" : "⚠️ Requiere atención"}
+            <div
+              style={{
+                fontSize: "0.85rem",
+                opacity: 0.9,
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              {userBalance >= 0 ? (
+                <>
+                  <CheckCircle size={16} />
+                  En positivo
+                </>
+              ) : (
+                <>
+                  <AlertCircle size={16} />
+                  Requiere atención
+                </>
+              )}
             </div>
           </div>
           <div
@@ -498,10 +520,9 @@ const Dashboard = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "28px",
                 }}
               >
-                ⚠️
+                <AlertCircle size={28} color="#991b1b" />
               </div>
               <div>
                 <h3
@@ -541,13 +562,23 @@ const Dashboard = ({
                 background: "white",
                 borderRadius: "12px",
                 borderLeft: "4px solid #f87171",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "0.75rem",
               }}
             >
-              <strong style={{ color: "#991b1b" }}>💡 Tip:</strong>
-              <span style={{ color: "#7f1d1d", marginLeft: "0.5rem" }}>
-                Revisa la sección de Educación para aprender sobre presupuestos
-                y control de gastos.
-              </span>
+              <Lightbulb
+                size={20}
+                color="#991b1b"
+                style={{ marginTop: "2px", flexShrink: 0 }}
+              />
+              <div>
+                <strong style={{ color: "#991b1b" }}>Tip:</strong>
+                <span style={{ color: "#7f1d1d", marginLeft: "0.5rem" }}>
+                  Revisa la sección de Educación para aprender sobre
+                  presupuestos y control de gastos.
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -583,10 +614,9 @@ const Dashboard = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "28px",
                 }}
               >
-                🚀
+                <Rocket size={32} color="#1e3a8a" />
               </div>
               <div>
                 <h3
@@ -626,12 +656,22 @@ const Dashboard = ({
                 background: "white",
                 borderRadius: "12px",
                 borderLeft: "4px solid #60a5fa",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "0.75rem",
               }}
             >
-              <strong style={{ color: "#1e40af" }}>🎯 Primer paso:</strong>
-              <span style={{ color: "#1e3a8a", marginLeft: "0.5rem" }}>
-                Ve a "Presupuesto" y registra tus ingresos y gastos del día.
-              </span>
+              <Target
+                size={20}
+                color="#1e40af"
+                style={{ marginTop: "2px", flexShrink: 0 }}
+              />
+              <div>
+                <strong style={{ color: "#1e40af" }}>Primer paso:</strong>
+                <span style={{ color: "#1e3a8a", marginLeft: "0.5rem" }}>
+                  Ve a "Presupuesto" y registra tus ingresos y gastos del día.
+                </span>
+              </div>
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import {
   Shirt,
   Heart,
   Laptop,
+  AlertCircle,
   MoreHorizontal,
   TrendingUp,
   Wallet,
@@ -558,8 +559,16 @@ const Budget = ({
           className="card"
           style={{ background: "#ffebee", border: "2px solid #f44336" }}
         >
-          <h3 style={{ color: "#d32f2f", margin: "0 0 1rem 0" }}>
-            ⚠️ Alerta de Sobregasto
+          <h3
+            style={{
+              color: "#d32f2f",
+              margin: "0 0 1rem 0",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <AlertCircle size={24} /> Alerta de Sobregasto
           </h3>
           <p style={{ color: "#d32f2f", margin: 0 }}>
             Tu balance es negativo. Considera revisar tus gastos y ajustar tu

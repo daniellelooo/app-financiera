@@ -15,6 +15,10 @@ import {
   MoreHorizontal,
   Sparkles,
   Activity,
+  DollarSign,
+  CreditCard,
+  PiggyBank,
+  Target,
 } from "lucide-react";
 import {
   VictoryPie,
@@ -69,6 +73,14 @@ const Statistics = ({ userExpenses, totalSaved }) => {
   const [filterType, setFilterType] = useState("mes");
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+  // Generar texto del período seleccionado
+  const getPeriodText = () => {
+    if (filterType === "mes") {
+      return `${monthsES[selectedMonth]} ${selectedYear}`;
+    }
+    return `${selectedYear}`;
+  };
 
   // Obtener ingresos y metas reales
   const [userIncomes, setUserIncomes] = useState([]);
@@ -265,13 +277,16 @@ const Statistics = ({ userExpenses, totalSaved }) => {
     y: expensesByCategory[cat],
   }));
 
-  // === NUEVA SECCIÓN: Datos para gráfica comparativa de últimos 6 meses ===
+  // Estado para rango de meses en gráfica comparativa
+  const [monthsRange, setMonthsRange] = useState(6);
+
+  // === NUEVA SECCIÓN: Datos para gráfica comparativa de últimos N meses ===
   const comparativeData = useMemo(() => {
     const months = [];
     const today = new Date();
 
-    // Generar últimos 6 meses (incluyendo el actual)
-    for (let i = 5; i >= 0; i--) {
+    // Generar últimos N meses según el rango seleccionado (incluyendo el actual)
+    for (let i = monthsRange - 1; i >= 0; i--) {
       const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
       const monthIndex = date.getMonth();
       const year = date.getFullYear();
@@ -304,7 +319,7 @@ const Statistics = ({ userExpenses, totalSaved }) => {
     }
 
     return months;
-  }, [userIncomes, userExpenses]);
+  }, [userIncomes, userExpenses, monthsRange]);
 
   return (
     <div>
@@ -636,7 +651,7 @@ const Statistics = ({ userExpenses, totalSaved }) => {
               size={24}
               style={{ marginRight: "10px", verticalAlign: "middle" }}
             />
-            Gastos por Categoría
+            Gastos por Categoría - {getPeriodText()}
           </h3>
           {categories.length === 0 ? (
             <p style={{ textAlign: "center", color: "#666", padding: "2rem" }}>
@@ -747,7 +762,7 @@ const Statistics = ({ userExpenses, totalSaved }) => {
               size={24}
               style={{ marginRight: "10px", verticalAlign: "middle" }}
             />
-            Resumen Ingresos/Gastos/Ahorros
+            Resumen Ingresos/Gastos/Ahorros - {getPeriodText()}
           </h3>
 
           <div
@@ -804,9 +819,13 @@ const Statistics = ({ userExpenses, totalSaved }) => {
                     opacity: 0.95,
                     textTransform: "uppercase",
                     letterSpacing: "1px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  💰 Ingresos
+                  <DollarSign size={20} />
+                  Ingresos
                 </div>
                 <div
                   style={{
@@ -874,9 +893,13 @@ const Statistics = ({ userExpenses, totalSaved }) => {
                     opacity: 0.95,
                     textTransform: "uppercase",
                     letterSpacing: "1px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  💸 Gastos
+                  <CreditCard size={20} />
+                  Gastos
                 </div>
                 <div
                   style={{
@@ -944,9 +967,13 @@ const Statistics = ({ userExpenses, totalSaved }) => {
                     opacity: 0.95,
                     textTransform: "uppercase",
                     letterSpacing: "1px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  🐷 Ahorros
+                  <PiggyBank size={20} />
+                  Ahorros
                 </div>
                 <div
                   style={{
@@ -1230,9 +1257,16 @@ const Statistics = ({ userExpenses, totalSaved }) => {
 
         <h3
           className="card-title"
-          style={{ position: "relative", marginBottom: "2rem" }}
+          style={{
+            position: "relative",
+            marginBottom: "2rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
         >
-          📊 Resumen del Período
+          <BarChart size={24} />
+          Resumen del Período - {getPeriodText()}
         </h3>
         <div
           style={{
@@ -1315,14 +1349,22 @@ const Statistics = ({ userExpenses, totalSaved }) => {
             >
               {(() => {
                 if (categories.length === 0) return "N/A";
-                const topCategory = categories[0];
+                // Ordenar categorías por monto de mayor a menor
+                const sortedCategories = [...categories].sort(
+                  (a, b) => expensesByCategory[b] - expensesByCategory[a]
+                );
+                const topCategory = sortedCategories[0];
                 return topCategory;
               })()}
             </div>
             <div style={{ fontSize: "0.85rem", opacity: 0.85 }}>
               {(() => {
                 if (categories.length === 0) return "Sin gastos";
-                const topAmount = expensesByCategory[categories[0]];
+                // Ordenar categorías por monto de mayor a menor
+                const sortedCategories = [...categories].sort(
+                  (a, b) => expensesByCategory[b] - expensesByCategory[a]
+                );
+                const topAmount = expensesByCategory[sortedCategories[0]];
                 return `$${topAmount.toLocaleString()}`;
               })()}
             </div>
@@ -1357,7 +1399,7 @@ const Statistics = ({ userExpenses, totalSaved }) => {
                 if (savingsGoals.length === 0) return "Crea tu primera meta";
                 const completedGoals = savingsGoals.filter((g) => g.completed);
                 return completedGoals.length === savingsGoals.length
-                  ? "¡Todas completadas! 🎉"
+                  ? "¡Todas completadas!"
                   : "metas completadas";
               })()}
             </div>
@@ -1365,28 +1407,81 @@ const Statistics = ({ userExpenses, totalSaved }) => {
         </div>
       </div>
 
-      {/* === SECCIÓN: Gráfica comparativa de últimos 6 meses (MOVIDA AL FINAL) === */}
+      {/* === SECCIÓN: Gráfica comparativa de últimos N meses (MOVIDA AL FINAL) === */}
       <div className="card" style={{ marginBottom: 24 }}>
-        <h3
-          className="card-title"
+        <div
           style={{
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            gap: 8,
-            marginBottom: 8,
+            marginBottom: 16,
+            flexWrap: "wrap",
+            gap: 16,
           }}
         >
-          <TrendingUp size={20} />
-          Comparativa de Últimos 6 Meses
-        </h3>
-        <p style={{ color: "#888", marginBottom: 16, fontSize: "0.85rem" }}>
-          Evolución mensual de ingresos vs gastos
-        </p>
+          <div>
+            <h3
+              className="card-title"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 8,
+              }}
+            >
+              <TrendingUp size={20} />
+              Comparativa de Últimos {monthsRange} Meses
+            </h3>
+            <p style={{ color: "#888", marginBottom: 0, fontSize: "0.85rem" }}>
+              Evolución mensual de ingresos vs gastos
+            </p>
+          </div>
+
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {[3, 6, 9, 12].map((range) => (
+              <button
+                key={range}
+                onClick={() => setMonthsRange(range)}
+                style={{
+                  padding: "0.6rem 1.2rem",
+                  borderRadius: "8px",
+                  border:
+                    monthsRange === range
+                      ? "2px solid #667eea"
+                      : "2px solid #e0e0e0",
+                  background:
+                    monthsRange === range
+                      ? "linear-gradient(135deg, #667eea, #764ba2)"
+                      : "white",
+                  color: monthsRange === range ? "white" : "#666",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  if (monthsRange !== range) {
+                    e.currentTarget.style.borderColor = "#667eea";
+                    e.currentTarget.style.color = "#667eea";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (monthsRange !== range) {
+                    e.currentTarget.style.borderColor = "#e0e0e0";
+                    e.currentTarget.style.color = "#666";
+                  }
+                }}
+              >
+                {range} {range === 1 ? "mes" : "meses"}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <VictoryChart
           theme={VictoryTheme.material}
           height={350}
-          width={800}
+          width={Math.max(600, monthsRange * 100)}
           padding={{ top: 50, bottom: 70, left: 80, right: 60 }}
           domainPadding={{ x: 30 }}
         >

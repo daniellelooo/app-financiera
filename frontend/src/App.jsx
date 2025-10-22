@@ -22,6 +22,24 @@ function App() {
   const [userExpenses, setUserExpenses] = React.useState([]);
   const [userIncomes, setUserIncomes] = React.useState([]);
   const [savingsGoals, setSavingsGoals] = React.useState([]);
+  const [isDarkMode, setIsDarkMode] = React.useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  // Aplicar modo oscuro
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
 
   // Validar token al cargar la página
   useEffect(() => {
@@ -122,6 +140,8 @@ function App() {
         <Header
           isAuthenticated={isAuthenticated}
           setIsAuthenticated={setIsAuthenticated}
+          isDarkMode={isDarkMode}
+          toggleTheme={toggleTheme}
         />
         <main className="main-content">
           <Routes>

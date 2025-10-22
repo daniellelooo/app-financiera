@@ -383,8 +383,8 @@ const Goals = ({
                 }
                 required
               >
-                <option value="saving">💰 Meta de Ahorro</option>
-                <option value="expense">📉 Meta de Gasto</option>
+                <option value="saving">Meta de Ahorro</option>
+                <option value="expense">Meta de Gasto</option>
               </select>
             </div>
 
@@ -499,8 +499,8 @@ const Goals = ({
 
             <button type="submit" className="btn btn-primary">
               {newGoal.type === "saving"
-                ? "💰 Crear Meta de Ahorro"
-                : "📉 Crear Meta de Gasto"}
+                ? "Crear Meta de Ahorro"
+                : "Crear Meta de Gasto"}
             </button>
           </form>
         </div>

@@ -8,6 +8,11 @@ import {
   BookOpen,
   Trophy,
   Smartphone,
+  GraduationCap,
+  Gamepad2,
+  BarChart3,
+  Shield,
+  Bot,
 } from "lucide-react";
 
 const Home = () => {
@@ -290,23 +295,71 @@ const Home = () => {
               listStyle: "none",
             }}
           >
-            <li style={{ marginBottom: 8 }}>
-              📚 Educación financiera adaptada a tu edad y contexto
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <GraduationCap size={20} color="#667eea" />
+              Educación financiera adaptada a tu edad y contexto
             </li>
-            <li style={{ marginBottom: 8 }}>
-              🎯 Metas de ahorro personalizadas y alcanzables
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Target size={20} color="#667eea" />
+              Metas de ahorro personalizadas y alcanzables
             </li>
-            <li style={{ marginBottom: 8 }}>
-              🤖 Recomendaciones inteligentes basadas en IA
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Bot size={20} color="#667eea" />
+              Recomendaciones inteligentes basadas en IA
             </li>
-            <li style={{ marginBottom: 8 }}>
-              🎮 Aprendizaje gamificado y divertido
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Gamepad2 size={20} color="#667eea" />
+              Aprendizaje gamificado y divertido
             </li>
-            <li style={{ marginBottom: 8 }}>
-              📊 Estadísticas visuales de tu progreso financiero
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <BarChart3 size={20} color="#667eea" />
+              Estadísticas visuales de tu progreso financiero
             </li>
-            <li style={{ marginBottom: 8 }}>
-              🛡️ Herramientas para evitar el sobreendeudamiento
+            <li
+              style={{
+                marginBottom: 8,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Shield size={20} color="#667eea" />
+              Herramientas para evitar el sobreendeudamiento
             </li>
           </ul>
         </div>
