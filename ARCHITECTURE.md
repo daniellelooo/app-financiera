@@ -209,37 +209,6 @@ education_progress (user_id, lesson_id, achievement_id, quiz_score, completed_at
 notifications (user_id, type, title, message, priority, is_read, created_at)
 ```
 
-**Nota**: Fechas como TEXT (ISO), cantidades como REAL. Auto-inicialización en `backend/index.js` líneas 28-183.
-
-## 🎮 Sistema de Gamificación
-
-### Arquitectura de Auto-Actualización
-
-```
-Frontend (Gamification.jsx) mount
-         │
-         ▼
-POST /api/gamification/refresh-challenges
-         │
-         ├─► Recalcula Challenge 1: Total metas creadas
-         ├─► Recalcula Challenge 2: 3+ metas
-         ├─► Recalcula Challenge 3: 7 días consecutivos con gastos
-         ├─► Recalcula Challenge 4: Meta completada
-         ├─► Recalcula Challenge 5: 5 lecciones completadas
-         │
-         ├─► checkAndAwardBadges()
-         │    └─► Verifica 6 condiciones de badges
-         │         └─► Crea notificaciones automáticas
-         │
-         ▼
-Frontend hace GET a /profile, /challenges, /badges, /leaderboard
-```
-
-### Fórmulas Clave
-
-- **Nivel**: `floor(puntos / 1000) + 1`
-- **Racha**: 5pts/día, 50pts bonus cada 7 días
-- **Badges**: Auto-otorgados por `awardBadge()` (nunca insertar manualmente)
 
 ## 🤖 Sistema de IA (Ollama)
 
@@ -325,74 +294,7 @@ await createNotification(
 - `POST /api/notifications/mark-all-read` - Marcar todas
 - `DELETE /api/notifications/:id` - Eliminar
 
-## 🚀 Flujo de Desarrollo
 
-### Inicio Rápido
-
-```bash
-# Terminal 1: Ollama (obligatorio para sugerencias)
-ollama run phi
-
-# Terminal 2: App completa
-npm run dev  # Usa concurrently → backend:4000 + frontend:5173
-```
-
-### Variables de Entorno
-
-```bash
-# backend/.env
-JWT_SECRET=supersecretkey
-# DB: postgres/1234@localhost:5432/appfinanciera
-
-# frontend/.env
-VITE_API_URL=http://localhost:4000
-```
-
-## 🎯 Metas: Ahorro vs. Gasto
-
-### Tipos de Metas
-
-```javascript
-// type: 'saving' → Acumular hasta target
-{
-  name: "Vacaciones",
-  target: 1000000,
-  current: 250000,  // Incrementa con aportes
-  type: "saving"
-}
-
-// type: 'spending' → No exceder target mensual
-{
-  name: "Restaurantes",
-  target: 200000,      // Límite mensual (puede ser % de ingresos)
-  current: 150000,     // Gastos acumulados del mes
-  type: "spending"
-}
-```
-
-Calculado en frontend - no hay tabla `movements` en DB.
-
-## ⚠️ Consideraciones Técnicas
-
-### PostgreSQL vs. SQLite
-
-- Usa `$1, $2, $3` (no `?` de SQLite)
-- SERIAL para auto-increment (no INTEGER PRIMARY KEY)
-- TEXT para fechas ISO, REAL para números decimales
-
-### Patrones Críticos
-
-1. **No duplicar fetches**: Si `App.jsx` ya provee data, no hacer `useEffect` fetch en hijos
-2. **Gamificación siempre vía refresh**: Nunca calcular progreso en frontend
-3. **Badges automáticos**: Usar `checkAndAwardBadges()`, no INSERT manual
-4. **Categorías hardcoded**: 8 categorías fijas en `Budget.jsx:36-45`
-
-### Limitaciones Conocidas
-
-- Sin migraciones DB (cambios vía ALTER manual)
-- JWT sin refresh (expira en 2h)
-- Ollama debe estar corriendo (sin fallback cloud)
-- Fechas como strings (no TIMESTAMP nativo)
 
 ## 📊 Endpoints API Principales
 
@@ -409,7 +311,7 @@ GET/POST/PUT/DELETE /api/goals
 GAMIFICATION
 GET  /api/gamification/profile
 GET  /api/gamification/challenges
-POST /api/gamification/refresh-challenges  ⭐ Llamar en cada carga
+POST /api/gamification/refresh-challenges  
 GET  /api/gamification/badges
 GET  /api/gamification/leaderboard
 POST /api/gamification/update-streak
@@ -430,30 +332,6 @@ AI
 GET /api/suggestions  (requiere Ollama activo)
 ```
 
-## 🔧 Debugging Tips
-
-### Ver logs de Ollama
-
-```bash
-# Backend muestra en consola:
-🤖 RAW modelo: [respuesta del LLM]
-```
-
-### Resetear gamificación
-
-```bash
-POST /api/gamification/reset-badges  # Recalcula todos los badges
-```
-
-### Verificar estado de DB
-
-```sql
--- PostgreSQL: postgres@localhost:5432/appfinanciera
-SELECT * FROM gamification_profile WHERE user_id = 1;
-SELECT * FROM user_challenges WHERE user_id = 1;
-```
-
----
 
 ## 🏆 BUENAS PRÁCTICAS IMPLEMENTADAS
 
@@ -889,35 +767,8 @@ body.dark-mode {
 
 ---
 
-### 9. Documentación
 
-#### ✅ README Completo
 
-- Descripción del proyecto
-- Stack tecnológico
-- Instalación y requisitos
-- Scripts disponibles
-- Screenshots
-
-#### ✅ Comentarios en Código Complejo
-
-```javascript
-// Sistema híbrido: primero genera candidatos determinísticos,
-// luego usa Ollama para refinar y seleccionar los 3 mejores.
-// Fallback a determinísticos si Ollama falla.
-const getSuggestions = async (data) => { ... }
-```
-
-#### ✅ Copilot Instructions
-
-Archivo `.github/copilot-instructions.md` documenta:
-
-- Arquitectura del proyecto
-- Patrones de diseño
-- Convenciones de código
-- Flujos críticos
-
----
 
 ## 📊 RESUMEN DE BUENAS PRÁCTICAS
 
