@@ -12,10 +12,10 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Dark Mode */
+/* Dark Mode - Mejorado con paleta simplificada y elegante */
 body.dark-mode {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #e4e4e7;
+  background: #0d1117;
+  color: #e6edf3;
 }
 
 body.dark-mode .main-content {
@@ -23,98 +23,207 @@ body.dark-mode .main-content {
 }
 
 body.dark-mode .card {
-  background: linear-gradient(135deg, #1e293b 0%, #1a2332 100%);
-  border: 1px solid #334155;
-  color: #e4e4e7;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  background: #161b22;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode .card:hover {
-  border-color: #475569;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: #484f58;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 body.dark-mode .card-title {
-  color: #f1f5f9;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Sobrescribir gradientes inline en modo oscuro */
+body.dark-mode .card[style*="background"],
+body.dark-mode .card[style*="gradient"],
+body.dark-mode div[style*="linear-gradient"] {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+
+body.dark-mode .stats-card,
+body.dark-mode .feature-card,
+body.dark-mode .hero-section {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
 }
 
 body.dark-mode .header {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid #334155;
+  background: #161b22;
+  box-shadow: 0 1px 0 0 #30363d;
+  border-bottom: 1px solid #30363d;
 }
 
 body.dark-mode .nav-link {
-  color: #cbd5e1;
+  color: #adbac7;
+  transition: all 0.2s ease;
 }
 
 body.dark-mode .nav-link:hover {
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  background: rgba(110, 118, 129, 0.1);
 }
 
 body.dark-mode input,
 body.dark-mode select,
 body.dark-mode textarea {
-  background: linear-gradient(135deg, #0f172a 0%, #1a2332 100%);
-  border: 1px solid #334155;
-  color: #e4e4e7;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  transition: all 0.2s ease;
 }
 
 body.dark-mode input::placeholder,
 body.dark-mode select::placeholder,
 body.dark-mode textarea::placeholder {
-  color: #64748b;
+  color: #7d8590;
 }
 
 body.dark-mode input:focus,
 body.dark-mode select:focus,
 body.dark-mode textarea:focus {
-  border-color: #6366f1;
-  background: #1e293b;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #6e7681;
+  background: #0d1117;
+  box-shadow: 0 0 0 3px rgba(110, 118, 129, 0.15);
+  outline: none;
 }
 
 body.dark-mode .btn-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: #30363d;
+  color: #ffffff;
+  box-shadow: 0 0 transparent;
+  border: 1px solid #484f58;
+  transition: all 0.2s ease;
 }
 
 body.dark-mode .btn-primary:hover {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: #484f58;
+  border-color: #6e7681;
+  box-shadow: 0 0 transparent;
 }
 
 body.dark-mode .btn-secondary {
-  background: #334155;
-  color: #cbd5e1;
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  transition: all 0.2s ease;
 }
 
 body.dark-mode .btn-secondary:hover {
-  background: #475569;
+  background: #30363d;
+  border-color: #484f58;
 }
 
 body.dark-mode .progress-bar {
-  background: #0f172a;
+  background: #0d1117;
+  border: 1px solid #30363d;
 }
 
 body.dark-mode table {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #161b22;
+  border: 1px solid #30363d;
 }
 
 body.dark-mode th {
-  background: #0f172a;
-  color: #f1f5f9;
-  border-bottom: 2px solid #334155;
+  background: #0d1117;
+  color: #ffffff;
+  border-bottom: 1px solid #30363d;
+  font-weight: 600;
 }
 
 body.dark-mode td {
-  color: #cbd5e1;
-  border-bottom: 1px solid #334155;
+  color: #e6edf3;
+  border-bottom: 1px solid #21262d;
 }
 
 body.dark-mode tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(110, 118, 129, 0.08);
+  transition: all 0.2s ease;
+}
+
+/* Mejorar legibilidad de todos los textos */
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label,
+body.dark-mode li {
+  color: #e6edf3 !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #ffffff !important;
+}
+
+body.dark-mode .stats-label,
+body.dark-mode .feature-subtitle,
+body.dark-mode small {
+  color: #adbac7 !important;
+}
+
+body.dark-mode .stats-number {
+  color: #ffffff !important;
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+}
+
+body.dark-mode a {
+  color: #539bf5;
+}
+
+body.dark-mode a:hover {
+  color: #6cb6ff;
+}
+
+/* Mejorar visibilidad de categorías y descripciones */
+body.dark-mode .expense-category,
+body.dark-mode .expense-description,
+body.dark-mode .income-description {
+  color: #e6edf3 !important;
+}
+
+/* Inputs en modo oscuro */
+body.dark-mode input[type="month"],
+body.dark-mode input[type="date"] {
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+}
+
+/* Mejorar barras de progreso */
+body.dark-mode .progress-bar {
+  background: #21262d !important;
+  border: 1px solid #30363d !important;
+  height: 12px !important;
+  border-radius: 6px !important;
+  overflow: visible !important;
+}
+
+body.dark-mode .progress-fill {
+  background: #58a6ff !important;
+  height: 100% !important;
+  border-radius: 6px !important;
+  min-width: 2% !important;
+}
+
+/* Tarjetas de números grandes */
+body.dark-mode .stats-card h2,
+body.dark-mode .card h2 {
+  font-size: 2rem !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  line-height: 1.2 !important;
 }
 
 .App {
@@ -706,4 +815,261 @@ textarea:hover {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
+}
+
+/* ============================================================
+   🌙 MODO OSCURO - DISEÑO COMPLETO Y COHERENTE
+   ============================================================ */
+
+/* ────────────────────────────────────────────────────────
+   REGLAS GLOBALES - Aplicar primero
+   ──────────────────────────────────────────────────────── */
+
+/* Remover TODOS los subrayados en modo oscuro */
+body.dark-mode * {
+  text-decoration: none !important;
+}
+
+/* Mantener hover en enlaces */
+body.dark-mode a:hover {
+  text-decoration: underline !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   TIPOGRAFÍA - Jerarquía clara de textos
+   ──────────────────────────────────────────────────────── */
+
+/* Títulos principales (h1, h2, h3, h4) */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode .card-title {
+  color: #ffffff !important;
+}
+
+/* Texto normal */
+body.dark-mode p,
+body.dark-mode div {
+  color: #e6edf3;
+}
+
+/* Texto secundario */
+body.dark-mode small,
+body.dark-mode .text-secondary {
+  color: #8b949e !important;
+}
+
+/* Valores numéricos destacados */
+body.dark-mode strong,
+body.dark-mode .amount,
+body.dark-mode .value {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* ────────────────────────────────────────────────────────
+   TARJETAS - Base para todas las cards
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode .card {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   LISTAS Y ELEMENTOS - Historial, transacciones
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode ul li,
+body.dark-mode .list-item {
+  background: #0d1117 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+/* Spans dentro de listas (fechas, categorías) */
+body.dark-mode ul li span,
+body.dark-mode ul li p {
+  color: #8b949e !important;
+}
+
+/* Montos en listas */
+body.dark-mode ul li strong {
+  color: #ffffff !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   TABLAS - Clasificaciones, leaderboards
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode table {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+
+body.dark-mode thead th {
+  background: #0d1117 !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid #30363d !important;
+}
+
+body.dark-mode tbody tr {
+  border-bottom: 1px solid #30363d !important;
+}
+
+body.dark-mode tbody tr:hover {
+  background: #1c2128 !important;
+}
+
+body.dark-mode tbody td {
+  color: #e6edf3 !important;
+}
+
+/* Primera columna (nombres) */
+body.dark-mode tbody td:first-child {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Última columna (puntos, totales) */
+body.dark-mode tbody td:last-child {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* ────────────────────────────────────────────────────────
+   BOTONES Y CONTROLES
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode button,
+body.dark-mode .btn {
+  background: #21262d !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+body.dark-mode button:hover,
+body.dark-mode .btn:hover {
+  background: #30363d !important;
+  border-color: #484f58 !important;
+}
+
+body.dark-mode button.active,
+body.dark-mode .btn.active {
+  background: #238636 !important;
+  border-color: #2ea043 !important;
+  color: #ffffff !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   INPUTS Y FORMULARIOS
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: #0d1117 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+body.dark-mode input:focus,
+body.dark-mode select:focus,
+body.dark-mode textarea:focus {
+  border-color: #58a6ff !important;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1) !important;
+}
+
+body.dark-mode select option {
+  background: #161b22 !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   MÓDULOS EDUCATIVOS - Lecciones y progreso
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode .lesson-card {
+  background: #0d1117 !important;
+  border: 1px solid #30363d !important;
+}
+
+body.dark-mode .lesson-card:hover {
+  border-color: #484f58 !important;
+  background: #161b22 !important;
+}
+
+/* Lecciones completadas */
+body.dark-mode .lesson-card.completed {
+  border-color: #2ea043 !important;
+  background: rgba(46, 160, 67, 0.05) !important;
+}
+
+body.dark-mode .lesson-card h4 {
+  color: #ffffff !important;
+}
+
+body.dark-mode .lesson-card span,
+body.dark-mode .lesson-card p {
+  color: #8b949e !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   TARJETAS DE RESUMEN - Dashboard, Estadísticas
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode .summary-card {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+
+body.dark-mode .summary-title {
+  color: #8b949e !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+body.dark-mode .summary-value {
+  color: #ffffff !important;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+body.dark-mode .summary-label {
+  color: #8b949e !important;
+  font-size: 0.8rem;
+}
+
+/* ────────────────────────────────────────────────────────
+   BADGES Y ETIQUETAS - Categorías, estados
+   ──────────────────────────────────────────────────────── */
+
+body.dark-mode .badge,
+body.dark-mode .tag,
+body.dark-mode .category-badge {
+  background: #21262d !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+/* ────────────────────────────────────────────────────────
+   SOBREESCRIBIR ESTILOS INLINE
+   ──────────────────────────────────────────────────────── */
+
+/* Gradientes inline */
+body.dark-mode [style*="linear-gradient"],
+body.dark-mode [style*="background: rgb"],
+body.dark-mode [style*="background: #"] {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+
+/* Colores inline de texto */
+body.dark-mode [style*="color: #666"],
+body.dark-mode [style*="color: rgb"] {
+  color: #e6edf3 !important;
 }
