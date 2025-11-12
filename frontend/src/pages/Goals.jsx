@@ -338,23 +338,37 @@ const Goals = ({
           <div
             className="card stats-card"
             style={{
-              background: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
             }}
           >
-            <Target size={48} style={{ marginBottom: "1rem" }} />
-            <h2 className="stats-number">{savingsGoals.length}</h2>
-            <p className="stats-label">Metas Activas</p>
+            <Target
+              size={48}
+              style={{ marginBottom: "1rem", color: "white" }}
+            />
+            <h2 className="stats-number" style={{ color: "white" }}>
+              {savingsGoals.length}
+            </h2>
+            <p className="stats-label" style={{ color: "white" }}>
+              Metas Activas
+            </p>
           </div>
 
           <div
             className="card stats-card"
             style={{
-              background: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+              background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
             }}
           >
-            <Trophy size={48} style={{ marginBottom: "1rem" }} />
-            <h2 className="stats-number">{completedGoals}</h2>
-            <p className="stats-label">Metas Completadas</p>
+            <Trophy
+              size={48}
+              style={{ marginBottom: "1rem", color: "white" }}
+            />
+            <h2 className="stats-number" style={{ color: "white" }}>
+              {completedGoals}
+            </h2>
+            <p className="stats-label" style={{ color: "white" }}>
+              Metas Completadas
+            </p>
           </div>
         </div>
       </div>
@@ -708,10 +722,6 @@ const Goals = ({
                         background: goal.completed
                           ? "linear-gradient(90deg, #4caf50 0%, #66bb6a 100%)"
                           : "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                        height: "28px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
                       }}
                     >
                       <span
@@ -943,10 +953,6 @@ const Goals = ({
                             : progress >= 80
                             ? "linear-gradient(90deg, #f39c12 0%, #e67e22 100%)"
                             : "linear-gradient(90deg, #4caf50 0%, #66bb6a 100%)",
-                        height: "28px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
                       }}
                     >
                       <span
