@@ -21,30 +21,7 @@ prototipo-app-financiera/
 └── package.json      # Scripts concurrently
 ```
 
-## 🔄 Flujo de Datos
 
-### Patrón Central: Lift State + Prop Drilling
-
-```
-┌─────────────────────────────────────────┐
-│            App.jsx (Root)               │
-│  ┌─────────────────────────────────┐   │
-│  │  State Central:                 │   │
-│  │  - userIncomes                  │   │
-│  │  - userExpenses                 │   │
-│  │  - userGoals                    │   │
-│  │  - balance (computed)           │   │
-│  └─────────────────────────────────┘   │
-└──────────────┬──────────────────────────┘
-               │ Props & Setters
-     ┌─────────┼─────────┬─────────┐
-     ▼         ▼         ▼         ▼
-  Budget   Dashboard  Goals   Statistics
-```
-
-**Regla de oro**: `App.jsx` hace fetch inicial, los hijos reciben datos por props. Solo refetch en hijos para actualizaciones específicas (ej: gamificación).
-
----
 
 ## 🎯 Patrón Modelo-Vista-Controlador (MVC)
 
